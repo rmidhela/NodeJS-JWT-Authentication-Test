@@ -7,8 +7,8 @@ const path = require('path');
 
 
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000'); // Update to http:// instead of https://
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Fixed the header name
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000'); 
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
 });
 
@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const PORT = 3000;
 
-const secretKey = 'MySuperSecretKey'; // Updated the secret key
+const secretKey = 'MySuperSecretKey';
 
 const jwtMW = exjwt({
     secret: secretKey,

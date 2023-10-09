@@ -70,7 +70,20 @@
                     if (res && res.data && res.data.success) {
                         document.querySelector('h1.row').innerHTML = 'Dashboard';
                         document.querySelector('main').innerHTML = res.data.myContent;
+                        const settingsButton = document.createElement("button");
+                        settingsButton.textContent = "Settings";
+                        settingsButton.onclick = settings;
+                        const buttonContainer = document.createElement("div");
+                        buttonContainer.className = "settings";
+                        buttonContainer.appendChild(settingsButton);
+                        document.querySelector("main").appendChild(buttonContainer);
+                        localStorage.setItem("currentPage", "dashboard");
                         history.pushState(null, null, "http://localhost:3000/dashboard");
+                        setTimeout(() => {
+                        localStorage.removeItem("jwt");
+                        localStorage.removeItem('currentPage')
+                        window.location.href = "/";
+                    }, 180000);
                     }
                 });
         }
@@ -87,32 +100,15 @@
                         document.querySelector('main').innerHTML = res.data.myContent;
                         history.pushState(null, null, "http://localhost:3000/settings");
 
+                        setTimeout(() => {
+                        localStorage.removeItem("jwt");
+                        localStorage.removeItem('currentPage')
+                        window.location.href = "/";
+                    }, 180000);
+
                     }
                 });
         }
-
-        // Function to check JWT expiration and reload the page if expired
-function checkTokenExpiration() {
-    const token = localStorage.getItem('jwt');
-    if (token) {
-        const decodedToken = jwt.decode(token);
-        const expirationTime = decodedToken.exp * 10; // Convert to milliseconds
-        const currentTime = Date.now();
-
-        // Check if the token is expired
-        if (currentTime > expirationTime) {
-            // Token has expired, reload the page
-            window.location.href = '/';
-        }
-    }
-}
-
-// Call the function when the application loads
-window.onload = function() {
-    checkTokenExpiration();
-    // Other initialization code...
-};
-
 
     </script>
 </body>
